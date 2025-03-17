@@ -106,7 +106,7 @@ export function ProductAdder() {
             value={personal}
             setValue={setPersonal}
             required
-            name="personal"
+            name="Personal"
             identifier="personal"
             type="number"
             placeholder="Precio personal"
@@ -115,7 +115,7 @@ export function ProductAdder() {
             value={professional}
             setValue={setProfessional}
             required
-            name="professional"
+            name="Professional"
             identifier="professional"
             type="number"
             placeholder="Precio Profesional"
