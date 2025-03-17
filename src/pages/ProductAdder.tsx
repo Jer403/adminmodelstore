@@ -106,19 +106,19 @@ export function ProductAdder() {
             value={personal}
             setValue={setPersonal}
             required
-            name="Personal"
-            identifier="Personal"
+            name="personal"
+            identifier="personal"
             type="number"
-            placeholder="Precio del producto"
+            placeholder="Precio personal"
           ></ProductInput>
           <ProductInput
             value={professional}
             setValue={setProfessional}
             required
-            name="Professional"
-            identifier="Professional"
+            name="professional"
+            identifier="professional"
             type="number"
-            placeholder="Precio del producto"
+            placeholder="Precio Profesional"
           ></ProductInput>
           <ProductInputImage
             required
