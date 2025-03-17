@@ -14,7 +14,8 @@ export function ProductAdder() {
   const [rar, setRar] = useState<File | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const [price, setPrice] = useState<string | null>(null);
+  const [personal, setPersonal] = useState<string | null>(null);
+  const [professional, setProfessional] = useState<string | null>(null);
   const [loadingFile, setLoadingFile] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +27,8 @@ export function ProductAdder() {
 
     formDataToSend.append("title", formData.get("title") as string);
     formDataToSend.append("description", formData.get("description") as string);
-    formDataToSend.append("price", formData.get("price") + "");
+    formDataToSend.append("personal", formData.get("personal") + "");
+    formDataToSend.append("professional", formData.get("professional") + "");
     formDataToSend.append("image", formData.get("image") as File);
 
     const gallery = formData.getAll("gallery") as File[];
@@ -101,11 +103,20 @@ export function ProductAdder() {
             placeholder="Descripcion del producto"
           ></ProductInput>
           <ProductInput
-            value={price}
-            setValue={setPrice}
+            value={personal}
+            setValue={setPersonal}
             required
-            name="Precio"
-            identifier="price"
+            name="Personal"
+            identifier="Personal"
+            type="number"
+            placeholder="Precio del producto"
+          ></ProductInput>
+          <ProductInput
+            value={professional}
+            setValue={setProfessional}
+            required
+            name="Professional"
+            identifier="Professional"
             type="number"
             placeholder="Precio del producto"
           ></ProductInput>
