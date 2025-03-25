@@ -76,7 +76,6 @@ export function ChatProvider({ children }: ChatProviderProps) {
 
   const setUserCardToSeen = (uuid: string) => {
     const index = userChat.findIndex((el) => el.id == uuid);
-    console.log(index);
     if (index != -1) {
       userChat[index].seen = true;
     }

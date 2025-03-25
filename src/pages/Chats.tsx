@@ -70,28 +70,37 @@ function UserChatCard({
 function ChatMessageCard({ chat }: { chat: ChatMessage }) {
   const date = new Date(chat.created_at + " UTC");
   const { loadingMessage, errorMessage } = useChat();
+  const id = `${chat.id}-${chat.created_at}`;
   return (
     <div
+      key={id}
       className={`relative flex max-w-sm min-h-max h-fit w-fit ${
         chat.isMessageFromUser == "false" && "self-end"
       } p-2 border rounded-md border-gray-300 bg-gray-50`}
     >
-      <p className="flex justify-start text-start">
+      <p className="flex justify-start text-start" key={id + "-1"}>
         {chat.message} &emsp;&emsp; &emsp;
       </p>
-      <p className="text-sm absolute right-1 bottom-1 text-gray-500">{`${formatHours(
-        date.getHours()
-      )}:${formatMinutes(date.getMinutes())} ${whichMeridian(
-        date.getHours()
-      )}`}</p>
+      <p
+        className="text-sm absolute right-1 bottom-1 text-gray-500"
+        key={id + "-2"}
+      >{`${formatHours(date.getHours())}:${formatMinutes(
+        date.getMinutes()
+      )} ${whichMeridian(date.getHours())}`}</p>
 
       {loadingMessage.find((el) => el.id == chat.id) && (
-        <div className="absolute top-1 right-1 items-end justify-end">
+        <div
+          className="absolute top-1 right-1 items-end justify-end"
+          key={id + "-3"}
+        >
           <Clock className="text-gray-500" width={13} height={13}></Clock>
         </div>
       )}
       {errorMessage.find((el) => el.id == chat.id) && (
-        <div className="absolute top-1 right-1 items-end justify-end">
+        <div
+          className="absolute top-1 right-1 items-end justify-end"
+          key={id + "-4"}
+        >
           <X className="text-gray-500" width={13} height={13}></X>
         </div>
       )}
@@ -102,9 +111,18 @@ function ChatMessageCard({ chat }: { chat: ChatMessage }) {
 function DateDivisor({ dateS }: { dateS: string }) {
   const date = new Date(dateS + " UTC");
   return (
-    <div className={`relative flex w-full justify-center items-center`}>
-      <div className="border-b w-[80%] absolute border-gray-300"></div>
-      <p className="bg-white z-10 px-4 text-gray-400">{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</p>
+    <div
+      key={date.getTime()}
+      className={`relative flex w-full justify-center items-center`}
+    >
+      <div
+        className="border-b w-[80%] absolute border-gray-300"
+        key={date.getTime() + "1"}
+      ></div>
+      <p
+        className="bg-white z-10 px-4 text-gray-400"
+        key={date.getTime() + "2"}
+      >{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</p>
     </div>
   );
 }
@@ -227,13 +245,13 @@ export function Chats() {
       const res = await sendMessageRequest(`${userId}`, message);
       if (res.status == 200) {
         console.log("Mensaje recibido");
-        removeLoadingMessage({ id: uuid });
         return;
       }
     } catch (error) {
-      removeLoadingMessage({ id: uuid });
       addErrorMessage({ id: uuid });
       console.log(error);
+    } finally {
+      removeLoadingMessage({ id: uuid });
     }
   };
 
@@ -276,6 +294,7 @@ export function Chats() {
           </div>
           <div
             className="flex h-full flex-col p-3 max-h-full overflow-auto gap-2"
+            key={"chatBox"}
             id={"chatBox"}
           >
             {chatSelected != null &&

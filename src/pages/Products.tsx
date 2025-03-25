@@ -15,7 +15,9 @@ function ProductCard({
   setProductInfo: (prod: ProductInfo) => void;
   setIsDialogOpen: (bool: boolean) => void;
 }) {
-  const [currentImage, setCurrentImage] = useState<string>(`${product.image}`);
+  const [currentImage, setCurrentImage] = useState<string>(
+    `${product.image}.webp`
+  );
 
   return (
     <div className="w-full flex flex-col group p-2 bg-white dark:bg-gray-80 border-2 border-gray-400 dark:border-gray-5 gap-1 rounded-lg shadow">
@@ -63,9 +65,9 @@ function ProductCard({
       <div className="flex gap-1">
         <div>
           <img
-            src={`${IMG_API_URL}${product.image}`}
+            src={`${IMG_API_URL}${product.image}.webp`}
             alt={product.title}
-            onMouseEnter={() => setCurrentImage(`${product.image}`)}
+            onMouseEnter={() => setCurrentImage(`${product.image}.webp`)}
             className={`${
               currentImage == `${product.image}`
                 ? "border-amber-200"
@@ -77,9 +79,9 @@ function ProductCard({
           return (
             <div>
               <img
-                src={`${IMG_API_URL}${image}`}
+                src={`${IMG_API_URL}${image}.webp`}
                 alt={product.title}
-                onMouseEnter={() => setCurrentImage(`${image}`)}
+                onMouseEnter={() => setCurrentImage(`${image}.webp`)}
                 className={`${
                   currentImage == `${image}`
                     ? "border-amber-300"

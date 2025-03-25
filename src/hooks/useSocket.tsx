@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 import { useChat } from "./useChat";
 import { useEffect } from "react";
 
-const socket = io("https://3dcute.up.railway.app", {
+const socket = io("https://modelfantasy.up.railway.app", {
   transports: ["websocket"],
 });
 
@@ -12,11 +12,15 @@ export function useSocket() {
 
   useEffect(() => {
     const handleNewMessage = (message: string) => {
+      console.log("----------------------------------------------");
       console.log("New message: ", message);
       addMessageToChat(JSON.parse(message));
       setUserCardToNotSeen(JSON.parse(message).userId);
     };
     const handleNewChat = (message: string, chat: string) => {
+      console.log("----------------------------------------------");
+      console.log("New Chat: ", chat);
+      console.log("New message: ", message);
       const chatParsed = JSON.parse(chat);
       addChatToUserChats({ ...chatParsed, seen: JSON.parse(chatParsed.seen) });
       addMessageToChat(JSON.parse(message));

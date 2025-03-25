@@ -1,4 +1,4 @@
-export const IMG_API_URL = "https://3dcute.up.railway.app/app/img/";
+export const IMG_API_URL = "https://modelfantasy.up.railway.app/imgs/";
 
 export const monthsEn = [
   "January",

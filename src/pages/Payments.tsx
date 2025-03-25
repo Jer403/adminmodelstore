@@ -35,7 +35,7 @@ function PaymentCard({ payment }: { payment: PaymentInterface }) {
           </p>
         </div>
         {payment.bookingDate && (
-          <p className=" text-2xl">{`Creado el ${createDateTextFromLanguage(
+          <p className=" text-2xl">{`Pagado el ${createDateTextFromLanguage(
             "es",
             new Date(payment.bookingDate)
           )}`}</p>
