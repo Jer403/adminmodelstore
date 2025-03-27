@@ -40,7 +40,7 @@ function ProductCard({
               </p>
             </div>
             <p className="text-2xl flex items-center dark:text-gray-5">
-              ${product.price}
+              From ${product.personal} to ${product.professional}
             </p>
           </div>
           <div className="flex flex-col gap-1">

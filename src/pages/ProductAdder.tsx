@@ -16,6 +16,7 @@ export function ProductAdder() {
   const [description, setDescription] = useState<string | null>(null);
   const [personal, setPersonal] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
+  const [progress, setProgress] = useState<number>(0);
   const [loadingFile, setLoadingFile] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,11 +41,16 @@ export function ProductAdder() {
     const toastId = toast.loading("Producto enviado a guardar");
 
     try {
-      const res = await createProductRequest(formDataToSend);
+      const res = await createProductRequest(formDataToSend, setProgress);
 
       form.reset();
       setFile(null);
       setFiles(null);
+      setProgress(0);
+      setName("");
+      setDescription("");
+      setPersonal("");
+      setProfessional("");
 
       if (res.status == 200) {
         toast.success("Producto guardado", { id: toastId });
@@ -109,6 +115,7 @@ export function ProductAdder() {
             name="Personal"
             identifier="personal"
             type="number"
+            step="0.01"
             placeholder="Precio personal"
           ></ProductInput>
           <ProductInput
@@ -118,6 +125,7 @@ export function ProductAdder() {
             name="Professional"
             identifier="professional"
             type="number"
+            step="0.01"
             placeholder="Precio Profesional"
           ></ProductInput>
           <ProductInputImage
@@ -146,13 +154,26 @@ export function ProductAdder() {
             identifier="rar"
             placeholder="Archivo rar del producto"
           ></ProductInputRar> */}
-          <button
-            type="submit"
-            disabled={loadingFile}
-            className="px-4 py-2 w-44 h-14 flex flex-row items-center justify-center gap-2 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Guardar
-          </button>
+          {progress > 0 ? (
+            <div className="w-full h-10 rounded-md bg-gray-300">
+              <div
+                className="h-full rounded-md flex transition-[width] items-center justify-end pr-2 bg-indigo-500"
+                style={{ width: `${progress}%` }}
+              >
+                <span className="text-xl font-medium text-gray-100">
+                  {progress}%
+                </span>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              disabled={loadingFile}
+              className="px-4 py-2 w-44 h-14 flex flex-row items-center justify-center gap-2 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Guardar
+            </button>
+          )}
         </form>
       </div>
     </>

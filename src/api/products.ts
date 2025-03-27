@@ -1,7 +1,19 @@
 import axios from "./axios.ts";
 
-export const createProductRequest = async (formData: FormData) => {
-  return await axios.post(`/product`, formData);
+export const createProductRequest = async (
+  formData: FormData,
+  setter?: React.Dispatch<React.SetStateAction<number>>
+) => {
+  return await axios.post(`/product`, formData, {
+    onUploadProgress: (progressEvent) => {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded * 100) /
+          (progressEvent.total ? progressEvent.total : 1)
+      );
+      console.log(`Progreso de subida: ${percentCompleted}%`);
+      if (setter) setter(percentCompleted);
+    },
+  });
 };
 
 export const getAllProductsRequest = async () => {

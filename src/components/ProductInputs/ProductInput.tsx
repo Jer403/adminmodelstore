@@ -6,6 +6,7 @@ export function ProductInput<T>({
   type,
   required,
   placeholder,
+  step,
 }: {
   value: T;
   setValue: React.Dispatch<React.SetStateAction<T>>;
@@ -14,6 +15,7 @@ export function ProductInput<T>({
   type: string;
   required: boolean;
   placeholder: string;
+  step?: string;
 }) {
   return (
     <div className="relative">
@@ -44,6 +46,7 @@ export function ProductInput<T>({
           type={type}
           name={identifier}
           id={identifier}
+          step={step}
           required={required}
           className="w-3xl h-16 text-2xl text-gray-900 bg-gray-50 border-2 border-solid border-gray-400 hover:border-indigo-600 focus:outline-indigo-600 rounded-md p-1.5"
           placeholder={placeholder}
