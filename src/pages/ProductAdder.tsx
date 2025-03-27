@@ -17,6 +17,8 @@ export function ProductAdder() {
   const [personal, setPersonal] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
   const [progress, setProgress] = useState<number>(0);
+  const [speed, setSpeed] = useState<number>(0);
+  const [time, setTime] = useState<number>(0);
   const [loadingFile, setLoadingFile] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +43,12 @@ export function ProductAdder() {
     const toastId = toast.loading("Producto enviado a guardar");
 
     try {
-      const res = await createProductRequest(formDataToSend, setProgress);
+      const res = await createProductRequest(
+        formDataToSend,
+        setProgress,
+        setSpeed,
+        setTime
+      );
 
       form.reset();
       setFile(null);
@@ -62,6 +69,14 @@ export function ProductAdder() {
       toast.error("Ocurrio un error", { id: toastId });
     }
   };
+
+  const estimatedTime = `${Math.floor(
+    time > 60 ? (time > 3600 ? time / 3600 : time / 60) : time
+  )}/${time > 60 ? (time > 3600 ? "h" : "m") : "s"}`;
+
+  const velocity = `${Math.floor(
+    speed > 1000 ? (speed > 1000000 ? speed / 1000000 : speed / 1000) : speed
+  )}/${speed > 1000 ? (speed > 1000000 ? "Mb" : "Kb") : "B"}`;
 
   return (
     <>
@@ -155,15 +170,25 @@ export function ProductAdder() {
             placeholder="Archivo rar del producto"
           ></ProductInputRar> */}
           {progress > 0 ? (
-            <div className="w-full h-10 rounded-md bg-gray-300">
-              <div
-                className="h-full rounded-md flex transition-[width] items-center justify-end pr-2 bg-indigo-500"
-                style={{ width: `${progress}%` }}
-              >
-                <span className="text-xl font-medium text-gray-100">
-                  {progress}%
-                </span>
+            <div>
+              <div className="w-full h-10 rounded-md bg-gray-300">
+                <div
+                  className="h-full rounded-md flex transition-[width] items-center justify-end pr-2 bg-indigo-500"
+                  style={{ width: `${progress}%` }}
+                >
+                  <span className="text-xl font-medium text-gray-100">
+                    {progress}%
+                  </span>
+                </div>
               </div>
+              <p className="mt-2 ">
+                <span className="text-xl font-medium pr-2 mr-2 border-r-2 border-gray-800">
+                  Speed: {velocity}
+                </span>
+                <span className="text-xl font-medium">
+                  Estimated time: {estimatedTime}
+                </span>
+              </p>
             </div>
           ) : (
             <button
