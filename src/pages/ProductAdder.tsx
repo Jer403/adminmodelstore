@@ -159,16 +159,6 @@ export function ProductAdder() {
             identifier="gallery"
             placeholder="Selecciona las imagenes de galeria del producto"
           ></ProductInputGallery>
-          {/* <ProductInputRar
-            required
-            loadingFile={loadingFile}
-            setLoadingFile={setLoadingFile}
-            file={rar}
-            setFile={setRar}
-            name="Archivo Rar"
-            identifier="rar"
-            placeholder="Archivo rar del producto"
-          ></ProductInputRar> */}
           {progress > 0 ? (
             <div>
               <div className="w-full h-10 rounded-md bg-gray-300">
@@ -203,4 +193,17 @@ export function ProductAdder() {
       </div>
     </>
   );
+}
+
+{
+  /* <ProductInputRar
+            required
+            loadingFile={loadingFile}
+            setLoadingFile={setLoadingFile}
+            file={rar}
+            setFile={setRar}
+            name="Archivo Rar"
+            identifier="rar"
+            placeholder="Archivo rar del producto"
+          ></ProductInputRar> */
 }

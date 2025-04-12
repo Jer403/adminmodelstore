@@ -258,9 +258,9 @@ export function Chats() {
   return (
     <>
       <div
-        className={`w-full max-w-[1300px] pt-10 px-6 mt-3 flex flex-row justify-between items-start relative`}
+        className={`w-full max-w-[81.25rem] pt-10 px-6 mt-3 flex flex-row justify-between items-start relative`}
       >
-        <div className="max-w-full flex flex-col justify-start gap-4 max-h-[674px] p-2 pb-5 overflow-auto">
+        <div className="max-w-full flex flex-col justify-start gap-4 max-h-[42.12rem] p-2 pb-5 overflow-auto">
           {!loadingUserChat ? (
             userChatCards()
           ) : (
@@ -273,7 +273,7 @@ export function Chats() {
         <div
           className={`relative flex flex-col bg-white border-2 transition-transform duration-300 ease-out right-0 ${
             chatSelected != null ? "border-gray-300" : "border-gray-300"
-          } rounded-lg w-3xl h-[700px]`}
+          } rounded-lg w-3xl h-[43.75rem]`}
         >
           <div
             className={`flex w-full border-b-2 ${
