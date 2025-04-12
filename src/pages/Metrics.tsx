@@ -335,7 +335,7 @@ export function Metrics() {
 
   return (
     <>
-      <div className="w-full max-w-[1330px] p-10 mt-3 flex flex-col items-center mb-md gap-6">
+      <div className="w-full max-w-[83.12rem] p-10 mt-3 flex flex-col items-center mb-md gap-6">
         <div className="w-full flex">
           <div className="bg-white p-2 rounded-md shadow items-center justify-center">
             <select
@@ -373,7 +373,7 @@ export function Metrics() {
               </>
             ) : (
               <>
-                <div className="w-[600px] h-[410px] flex justify-center items-center text-2xl gap-4">
+                <div className="w-[37.5rem] h-[25.62rem] flex justify-center items-center text-2xl gap-4">
                   <CircleDashed className="h-10 w-10 loader"></CircleDashed>
                   <p>Analizando ganancias...</p>
                 </div>
@@ -393,7 +393,7 @@ export function Metrics() {
               </>
             ) : (
               <>
-                <div className="w-[600px] h-[410px] flex justify-center items-center text-2xl gap-4">
+                <div className="w-[37.5rem] h-[25.62rem] flex justify-center items-center text-2xl gap-4">
                   <CircleDashed className="h-10 w-10 loader"></CircleDashed>
                   <p>Analizando usuarios creados...</p>
                 </div>
@@ -412,7 +412,7 @@ export function Metrics() {
               </>
             ) : (
               <>
-                <div className="w-[560px] h-[410px] flex justify-center items-center text-2xl gap-4">
+                <div className="w-[37.5rem] h-[25.62rem] flex justify-center items-center text-2xl gap-4">
                   <CircleDashed className="h-10 w-10 loader"></CircleDashed>
                   <p>Analizando total de productos vendidos...</p>
                 </div>
@@ -429,7 +429,7 @@ export function Metrics() {
               </>
             ) : (
               <>
-                <div className="w-[600px] h-[410px] flex justify-center items-center text-2xl gap-4">
+                <div className="w-[37.5rem] h-[25.62rem] flex justify-center items-center text-2xl gap-4">
                   <CircleDashed className="h-10 w-10 loader"></CircleDashed>
                   <p>Analizando productos comprados...</p>
                 </div>
