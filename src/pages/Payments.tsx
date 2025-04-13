@@ -6,13 +6,13 @@ function PaymentCard({ payment }: { payment: PaymentInterface }) {
   return (
     <div className="w-full border-2 bg-white border-gray-400 rounded-lg hover:shadow-lg hover:scale-[101%] transition-[scale,box-shadow] shadow-md p-3 flex flex-row justify-between gap-1 shadow">
       <div className="flex flex-col justify-between items-start text-2xl gap-1">
-        <p>
+        <p className="text-xl">
           ID: <span className="ml-2 font-semibold">{payment.id}</span>
         </p>
-        <p className="flex justify-start">
+        <p className="flex justify-start text-xl">
           UserID: <span className="ml-2 font-semibold">{payment.userId}</span>
         </p>
-        <p className="flex justify-start">
+        <p className="flex justify-start text-xl">
           Price: $<span className="font-semibold">{payment.price}</span>
         </p>
       </div>
@@ -35,13 +35,13 @@ function PaymentCard({ payment }: { payment: PaymentInterface }) {
           </p>
         </div>
         {payment.bookingDate && (
-          <p className=" text-2xl">{`Pagado el ${createDateTextFromLanguage(
+          <p className=" text-xl">{`Pagado el ${createDateTextFromLanguage(
             "es",
             new Date(payment.bookingDate)
           )}`}</p>
         )}
 
-        <p className=" text-2xl">{`Creado el ${createDateTextFromLanguage(
+        <p className=" text-xl">{`Creado el ${createDateTextFromLanguage(
           "es",
           new Date(payment.created_at)
         )}`}</p>

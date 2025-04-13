@@ -5,6 +5,7 @@ import { UserInterface } from "../types";
 interface UserContextType {
   users: UserInterface[] | null;
   loadingUsers: boolean;
+  removeUser: (id: string) => void;
 }
 
 interface UserProviderProps {
@@ -14,6 +15,9 @@ interface UserProviderProps {
 export const UserContext = createContext<UserContextType>({
   users: null,
   loadingUsers: true,
+  removeUser: () => {
+    console.log("Function yet no loaded");
+  },
 });
 
 export function UserProvider({ children }: UserProviderProps) {
@@ -40,12 +44,16 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   };
 
+  const removeUser = async (id: string) => {
+    setUsers(users ? users.filter((el) => el.id != id) : null);
+  };
+
   useEffect(() => {
     getUsers();
   }, []);
 
   return (
-    <UserContext.Provider value={{ users, loadingUsers }}>
+    <UserContext.Provider value={{ users, loadingUsers, removeUser }}>
       {children}
     </UserContext.Provider>
   );
