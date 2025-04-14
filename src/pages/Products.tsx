@@ -1,4 +1,4 @@
-import { Edit } from "lucide-react";
+import { Edit, TriangleAlert } from "lucide-react";
 import { IMG_API_URL } from "../consts";
 import { useProduct } from "../hooks/useProduct";
 import { Product, ProductInfo } from "../types";
@@ -26,7 +26,7 @@ function ProductCard({
           <img
             src={`${IMG_API_URL}${currentImage}`}
             alt={product.title}
-            className="h-16 w-16 sm:h-20 group-hover:h-64 group-hover:w-64  transition-[width,height]  sm:w-20 md:h-36 md:w-36 text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5"
+            className="h-48 w-48 md:h-64 md:w-64 text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5"
           />
         </div>
         <div className="w-full ml-4 flex flex-row justify-between">
@@ -43,7 +43,7 @@ function ProductCard({
               From ${product.personal} to ${product.professional}
             </p>
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col items-end gap-1">
             <button
               className="w-32 h-12 px-1 flex flex-row items-center justify-center gap-2 text-sm font-medium rounded-md text-gray-50 dark:text-gray-30 border-2 border-blue-400 dark:hover:bg-gray-70  hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
               onClick={() => {
@@ -52,12 +52,44 @@ function ProductCard({
                   id: product.id,
                   title: product.title,
                   description: product.description,
-                  price: product.price,
+                  personal: product.personal,
+                  professional: product.professional,
+                  driveId: product.driveId,
+                  weight: product.weight,
                 });
               }}
             >
               <Edit className="text-blue-400 h-7 w-7"></Edit>
               <span className="text-blue-400 text-xl">Editar</span>
+            </button>
+            <button
+              className="max-w-80 min-h-12 w-max h-fit px-1 flex-row items-center justify-center gap-2 text-sm font-medium rounded-md text-gray-50 dark:text-gray-30 border-2 border-red-400 dark:hover:bg-gray-70  hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+              style={{
+                display: product.driveId
+                  ? product.weight
+                    ? "none"
+                    : "flex"
+                  : "flex",
+              }}
+              onClick={() => {
+                setIsDialogOpen(true);
+                setProductInfo({
+                  id: product.id,
+                  title: product.title,
+                  description: product.description,
+                  personal: product.personal,
+                  professional: product.professional,
+                  driveId: product.driveId,
+                  weight: product.weight,
+                });
+              }}
+            >
+              <TriangleAlert className="text-red-400 h-7 w-7 min-w-7 min-h-7" />
+              <span className="text-red-400 text-xl">
+                {product.driveId
+                  ? product.weight && "El producto no tiene un peso asignado"
+                  : "El producto no tiene un archivo asignado!"}
+              </span>
             </button>
           </div>
         </div>
@@ -72,7 +104,7 @@ function ProductCard({
               currentImage == `${product.image}`
                 ? "border-amber-200"
                 : "border-gray-400"
-            } h-[70px] w-[70px] text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5`}
+            } h-[4.375rem] w-[4.375rem] text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5`}
           />
         </div>
         {product.gallery?.map((image) => {
@@ -86,7 +118,7 @@ function ProductCard({
                   currentImage == `${image}`
                     ? "border-amber-300"
                     : "border-gray-400"
-                } h-[70px] w-[70px] text-[8px] aspect-square object-cover rounded-md border-2 dark:text-gray-5`}
+                } h-[4.375rem] w-[4.375rem] text-[8px] aspect-square object-cover rounded-md border-2 dark:text-gray-5`}
               />
             </div>
           );
@@ -102,13 +134,27 @@ export function Products() {
   const [currentId, setCurrentId] = useState("");
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDesc, setCurrentDesc] = useState("");
-  const [currentPrice, setCurrentPrice] = useState(0);
+  const [currentPersonal, setCurrentPersonal] = useState(0);
+  const [currentProfessional, setCurrentProfessional] = useState(0);
+  const [currentDriveId, setcurrentDriveId] = useState("");
+  const [currentWeight, setCurrentWeight] = useState(0);
 
-  const setProductInfo = ({ id, title, description, price }: ProductInfo) => {
+  const setProductInfo = ({
+    id,
+    title,
+    description,
+    personal,
+    professional,
+    driveId,
+    weight,
+  }: ProductInfo) => {
     setCurrentId(id);
     setCurrentTitle(title);
     setCurrentDesc(description);
-    setCurrentPrice(price);
+    setCurrentPersonal(personal);
+    setCurrentProfessional(professional);
+    setcurrentDriveId(driveId);
+    setCurrentWeight(weight);
   };
 
   return (
@@ -137,7 +183,10 @@ export function Products() {
           id: currentId,
           title: currentTitle,
           description: currentDesc,
-          price: currentPrice,
+          personal: currentPersonal,
+          professional: currentProfessional,
+          driveId: currentDriveId,
+          weight: currentWeight,
         }}
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}

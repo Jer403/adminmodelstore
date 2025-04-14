@@ -13,7 +13,7 @@ export function ProductInputGallery({
   placeholder: string;
   required: boolean;
   files: File[] | null;
-  setFiles: React.Dispatch<React.SetStateAction<File[] | null>>;
+  setFiles: (value: File[] | null) => void;
 }) {
   const [previews, setPreviews] = useState<string[]>([]);
   const inputFile = useRef<HTMLInputElement | null>(null);

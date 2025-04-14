@@ -2,10 +2,12 @@ export interface Product {
   id: string;
   title: string;
   description: string;
-  personal: string;
-  professional: string;
+  personal: number;
+  professional: number;
   image: string;
   gallery?: string[];
+  driveId: string;
+  weight: number;
 }
 
 export interface UserInterface {
@@ -69,5 +71,8 @@ export interface ProductInfo {
   id: string;
   title: string;
   description: string;
-  price: number;
+  personal: number;
+  professional: number;
+  driveId: string;
+  weight: number;
 }

@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
+import { API_URL } from "../consts";
 
 export function Navbar() {
   const location = useLocation();
   return (
     <nav className="bg-white rounded-lg shadow-gray-300 shadow w-fit">
-      <div className="max-w-[83.12rem] w-fit mx-auto px-4">
+      <div className=" w-fit mx-auto px-4">
         <div className="flex justify-evenly items-center h-16">
           <div className="flex items-center relative space-x-8">
             <Link
@@ -76,6 +77,16 @@ export function Navbar() {
             >
               Beneficiarys
             </Link>
+            <span>|</span>
+            <a
+              draggable={false}
+              href={`${API_URL}d/auth`}
+              className={`text-gray-700 hover:text-indigo-600 py-2 px-3 rounded-md text-xl ${
+                location.pathname == "/beneficiarys" && "bg-indigo-100"
+              }`}
+            >
+              Auth Drive
+            </a>
           </div>
         </div>
       </div>

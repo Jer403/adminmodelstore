@@ -13,7 +13,7 @@ export function ProductInputImage({
   placeholder: string;
   required: boolean;
   file: File | null;
-  setFile: React.Dispatch<React.SetStateAction<File | null>>;
+  setFile: (value: File | null) => void;
 }) {
   const inputFile = useRef<HTMLInputElement | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);

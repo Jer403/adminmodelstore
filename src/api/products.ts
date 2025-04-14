@@ -39,7 +39,7 @@ export const createProductRequest = async (
 };
 
 export const getAllProductsRequest = async () => {
-  return await axios.get(`/product`);
+  return await axios.get(`/productswd`);
 };
 
 export const getUsersRequest = async () => {
@@ -58,12 +58,26 @@ export const editRequest = async ({
   id,
   title,
   description,
-  price,
+  personal,
+  professional,
+  driveId,
+  weight,
 }: {
   id: string;
   title: string;
   description: string;
-  price: number;
+  personal: number;
+  professional: number;
+  driveId: string;
+  weight: number;
 }) => {
-  return await axios.post(`/product/update`, { id, title, description, price });
+  return await axios.post(`/product/update`, {
+    id,
+    title,
+    description,
+    personal,
+    professional,
+    driveUrl: driveId,
+    weight,
+  });
 };

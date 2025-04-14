@@ -9,7 +9,7 @@ export function ProductInput<T>({
   step,
 }: {
   value: T;
-  setValue: React.Dispatch<React.SetStateAction<T>>;
+  setValue: (value: T) => void;
   identifier: string;
   name: string;
   type: string;
@@ -21,7 +21,7 @@ export function ProductInput<T>({
     <div className="relative">
       <label
         htmlFor={identifier}
-        className="absolute top-[-14px] left-3 px-1 bg-gray-50  text-lg"
+        className="absolute top-[-0.875rem] left-3 px-1 bg-gray-50  text-lg"
       >
         {name}
       </label>

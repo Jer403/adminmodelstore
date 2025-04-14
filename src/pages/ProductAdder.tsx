@@ -5,21 +5,36 @@ import { ProductInputImage } from "../components/ProductInputs/ProductInputImage
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { createProductRequest } from "../api/products.ts";
-import { ProductInputRar } from "../components/ProductInputs/ProductInputRar.tsx";
+
+type ProdInfo = {
+  title: string | null;
+  description: string | null;
+  personal: number | null;
+  professional: number | null;
+  image: File | null;
+  gallery: File[] | null;
+  driveUrl: string | null;
+  weight: number | null;
+};
+
+const initialState = {
+  title: null,
+  description: null,
+  personal: null,
+  professional: null,
+  image: null,
+  gallery: null,
+  driveUrl: null,
+  weight: null,
+};
 
 export function ProductAdder() {
   const [errors, setErrors] = useState<string[] | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const [files, setFiles] = useState<File[] | null>(null);
-  const [rar, setRar] = useState<File | null>(null);
-  const [name, setName] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [personal, setPersonal] = useState<string | null>(null);
-  const [professional, setProfessional] = useState<string | null>(null);
+
+  const [data, setData] = useState<ProdInfo>(initialState);
   const [progress, setProgress] = useState<number>(0);
   const [speed, setSpeed] = useState<number>(0);
   const [time, setTime] = useState<number>(0);
-  const [loadingFile, setLoadingFile] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,11 +43,13 @@ export function ProductAdder() {
     const formData = new FormData(form);
     const formDataToSend = new FormData();
 
-    formDataToSend.append("title", formData.get("title") as string);
-    formDataToSend.append("description", formData.get("description") as string);
-    formDataToSend.append("personal", formData.get("personal") + "");
-    formDataToSend.append("professional", formData.get("professional") + "");
-    formDataToSend.append("image", formData.get("image") as File);
+    formDataToSend.append("title", data.title as string);
+    formDataToSend.append("description", data.description as string);
+    formDataToSend.append("personal", data.personal + "");
+    formDataToSend.append("professional", data.professional + "");
+    formDataToSend.append("image", data.image as File);
+    formDataToSend.append("driveUrl", data.driveUrl as string);
+    formDataToSend.append("weight", data.weight + "");
 
     const gallery = formData.getAll("gallery") as File[];
 
@@ -51,13 +68,7 @@ export function ProductAdder() {
       );
 
       form.reset();
-      setFile(null);
-      setFiles(null);
-      setProgress(0);
-      setName("");
-      setDescription("");
-      setPersonal("");
-      setProfessional("");
+      setData(initialState);
 
       if (res.status == 200) {
         toast.success("Producto guardado", { id: toastId });
@@ -67,12 +78,21 @@ export function ProductAdder() {
     } catch (error) {
       console.log(error);
       toast.error("Ocurrio un error", { id: toastId });
+    } finally {
+      setProgress(0);
     }
+  };
+
+  const updateData = (
+    field: string,
+    value: string | number | File | null | File[]
+  ) => {
+    setData((prev) => ({ ...prev, [field]: value }));
   };
 
   const estimatedTime = `${Math.floor(
     time > 60 ? (time > 3600 ? time / 3600 : time / 60) : time
-  )}/${time > 60 ? (time > 3600 ? "h" : "m") : "s"}`;
+  )}${time > 60 ? (time > 3600 ? "h" : "m") : "s"}`;
 
   const velocity = `${Math.floor(
     speed > 1000 ? (speed > 1000000 ? speed / 1000000 : speed / 1000) : speed
@@ -106,8 +126,10 @@ export function ProductAdder() {
           onSubmit={handleSubmit}
         >
           <ProductInput
-            value={name}
-            setValue={setName}
+            value={data.title as string}
+            setValue={(value: string | number) => {
+              updateData("title", value);
+            }}
             required
             name="Titulo"
             identifier="title"
@@ -115,8 +137,10 @@ export function ProductAdder() {
             placeholder="Titulo del producto"
           />
           <ProductInput
-            value={description}
-            setValue={setDescription}
+            value={data.description as string}
+            setValue={(value: string | number) => {
+              updateData("description", value);
+            }}
             required
             name="Descripción"
             identifier="description"
@@ -124,8 +148,10 @@ export function ProductAdder() {
             placeholder="Descripcion del producto"
           ></ProductInput>
           <ProductInput
-            value={personal}
-            setValue={setPersonal}
+            value={data.personal as number}
+            setValue={(value: string | number) => {
+              updateData("personal", value);
+            }}
             required
             name="Personal"
             identifier="personal"
@@ -134,8 +160,10 @@ export function ProductAdder() {
             placeholder="Precio personal"
           ></ProductInput>
           <ProductInput
-            value={professional}
-            setValue={setProfessional}
+            value={data.professional as number}
+            setValue={(value: string | number) => {
+              updateData("professional", value);
+            }}
             required
             name="Professional"
             identifier="professional"
@@ -145,20 +173,47 @@ export function ProductAdder() {
           ></ProductInput>
           <ProductInputImage
             required
-            file={file}
-            setFile={setFile}
+            file={data.image}
+            setFile={(value: File | null) => {
+              updateData("image", value);
+            }}
             name="Imagen Principal"
             identifier="image"
             placeholder="Imagen principal del producto"
           ></ProductInputImage>
           <ProductInputGallery
             required
-            files={files}
-            setFiles={setFiles}
+            files={data.gallery}
+            setFiles={(value: File[] | null) => {
+              updateData("gallery", value);
+            }}
             name="Galeria"
             identifier="gallery"
             placeholder="Selecciona las imagenes de galeria del producto"
           ></ProductInputGallery>
+          <ProductInput
+            value={data.driveUrl as string}
+            setValue={(value: string | number) => {
+              updateData("driveUrl", value);
+            }}
+            required
+            name="Drive Url"
+            identifier="driveUrl"
+            type="text"
+            step="0.01"
+            placeholder="Link del archivo"
+          ></ProductInput>
+          <ProductInput
+            value={data.weight as number}
+            setValue={(value: string | number) => {
+              updateData("weight", value);
+            }}
+            required
+            name="Weight (en MB)"
+            identifier="weight"
+            type="number"
+            placeholder="Peso del archivo"
+          ></ProductInput>
           {progress > 0 ? (
             <div>
               <div className="w-full h-10 rounded-md bg-gray-300">
@@ -183,7 +238,6 @@ export function ProductAdder() {
           ) : (
             <button
               type="submit"
-              disabled={loadingFile}
               className="px-4 py-2 w-44 h-14 flex flex-row items-center justify-center gap-2 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Guardar

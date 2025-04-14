@@ -12,34 +12,50 @@ export function EditProductDialog({
   isOpen: boolean;
   productInfo: ProductInfo;
   setIsOpen: (bool: boolean) => void;
-  updateProduct: ({ id, title, description, price }: ProductInfo) => void;
+  updateProduct: ({
+    id,
+    title,
+    description,
+    personal,
+    professional,
+    driveId,
+    weight,
+  }: ProductInfo) => void;
 }) {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const [personal, setPersonal] = useState(0);
+  const [professional, setProfessional] = useState(0);
+  const [driveId, setDriveId] = useState("");
+  const [weight, setWeight] = useState(0);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!loadingSubmit) {
       setLoadingSubmit(true);
       try {
-        console.log({
-          id,
-          title,
-          description,
-          price,
-        });
         const res = await editRequest({
           id,
           title,
           description,
-          price,
+          personal,
+          professional,
+          driveId,
+          weight,
         });
         console.log(res);
         if (res.status == 200) {
-          updateProduct({ id, title, description, price });
+          updateProduct({
+            id,
+            title,
+            description,
+            personal,
+            professional,
+            driveId,
+            weight,
+          });
           setIsOpen(false);
         }
       } catch (error) {
@@ -54,7 +70,10 @@ export function EditProductDialog({
     setId(productInfo.id);
     setTitle(productInfo.title);
     setDescription(productInfo.description);
-    setPrice(productInfo.price);
+    setPersonal(productInfo.personal);
+    setProfessional(productInfo.professional);
+    setDriveId(productInfo.driveId ? productInfo.driveId : "");
+    setWeight(productInfo.weight ? productInfo.weight : 0);
   }, [productInfo]);
 
   return (
@@ -66,7 +85,7 @@ export function EditProductDialog({
     >
       <div className="flex justify-center items-center w-full h-full">
         <div
-          className="bg-white w-lg h-[348px] rounded-lg shadow flex flex-col p-4 "
+          className="bg-white w-lg h-fit rounded-lg shadow flex flex-col p-4 "
           onMouseDown={(e) => e.stopPropagation()}
         >
           <form
@@ -92,22 +111,62 @@ export function EditProductDialog({
             <input
               id="description"
               title="description"
-              type="string"
+              type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
               className={`mb-2 appearance-none text-md h-12 my-1 rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10`}
             />
 
-            <label htmlFor="price" className="text-md text-gray-500 ">
-              {`Price (€)`}
+            <label htmlFor="personal" className="text-md text-gray-500 ">
+              {`Personal (€)`}
             </label>
             <input
               id="price"
               title="price"
               type="number"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              value={personal}
+              onChange={(e) => setPersonal(Number(e.target.value))}
+              required
+              className={`mb-2 appearance-none text-md h-12 my-1 rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10`}
+            />
+
+            <label htmlFor="professional" className="text-md text-gray-500 ">
+              {`Professional (€)`}
+            </label>
+            <input
+              id="price"
+              title="price"
+              type="number"
+              value={professional}
+              onChange={(e) => setProfessional(Number(e.target.value))}
+              required
+              className={`mb-5 appearance-none text-md h-12 my-1 rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10`}
+            />
+
+            <label htmlFor="driveUrl" className="text-md text-gray-500 ">
+              Drive Url
+            </label>
+            <input
+              id="driveUrl"
+              title="driveUrl"
+              type="text"
+              value={driveId}
+              onChange={(e) => setDriveId(e.target.value)}
+              required
+              className={`mb-2 appearance-none text-md h-12 my-1 rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10`}
+              placeholder="Link del archivo"
+            />
+
+            <label htmlFor="weight" className="text-md text-gray-500 ">
+              {`Weight (en MB)`}
+            </label>
+            <input
+              id="weight"
+              title="weight"
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(Number(e.target.value))}
               required
               className={`mb-5 appearance-none text-md h-12 my-1 rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10`}
             />

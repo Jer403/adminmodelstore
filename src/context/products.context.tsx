@@ -9,7 +9,8 @@ interface ProductContextType {
     id: string;
     title: string;
     description: string;
-    price: number;
+    personal: number;
+    professional: number;
   }) => void;
 }
 
@@ -31,7 +32,8 @@ export function ProductProvider({ children }: ProductProviderProps) {
     id: string;
     title: string;
     description: string;
-    price: number;
+    personal: number;
+    professional: number;
   }) => {
     const UpdatedProduct = products.map((p) => {
       if (p.id == product.id)
@@ -39,7 +41,8 @@ export function ProductProvider({ children }: ProductProviderProps) {
           ...p,
           title: product.title,
           description: product.description,
-          price: product.price,
+          personal: product.personal,
+          professional: product.professional,
         };
       return p;
     });

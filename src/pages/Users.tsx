@@ -21,6 +21,10 @@ function UserCard({
       `Estas seguro de que quiere eliminar al usuario ${user.id}?`
     );
     if (!confirmation) return;
+    const confirmation2 = confirm(
+      `Estas completamente seguro de que realemente quiere eliminar al usuario ${user.id}?`
+    );
+    if (!confirmation2) return;
     try {
       const res = await deleteUserRequest(user.id);
       if (res.status == 200) {
@@ -93,7 +97,7 @@ export function Users() {
 
   return (
     <>
-      <div className="w-full p-10  mt-3 max-w-[1330px] flex flex-col gap-4 items-center">
+      <div className="w-full p-10  mt-3 max-w-[83.12rem] flex flex-col gap-4 items-center">
         <div className="w-full bg-white rounded-lg shadow flex items-center">
           <input
             type="text"
