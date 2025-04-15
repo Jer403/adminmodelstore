@@ -39,8 +39,6 @@ export function ProductAdder() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
     const formDataToSend = new FormData();
 
     formDataToSend.append("title", data.title as string);
@@ -51,7 +49,7 @@ export function ProductAdder() {
     formDataToSend.append("driveUrl", data.driveUrl as string);
     formDataToSend.append("weight", data.weight + "");
 
-    const gallery = formData.getAll("gallery") as File[];
+    const gallery = data.gallery as File[];
 
     gallery.forEach((item) => {
       formDataToSend.append("gallery", item);
@@ -67,7 +65,6 @@ export function ProductAdder() {
         setTime
       );
 
-      form.reset();
       setData(initialState);
 
       if (res.status == 200) {

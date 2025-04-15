@@ -81,9 +81,7 @@ export function Navbar() {
             <a
               draggable={false}
               href={`${API_URL}d/auth`}
-              className={`text-gray-700 hover:text-indigo-600 py-2 px-3 rounded-md text-xl ${
-                location.pathname == "/beneficiarys" && "bg-indigo-100"
-              }`}
+              className={`text-white hover:bg-indigo-600 bg-indigo-500 py-2 px-3 rounded-md text-xl`}
             >
               Auth Drive
             </a>

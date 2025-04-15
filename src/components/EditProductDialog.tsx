@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { CircleDashed } from "lucide-react";
 import { editRequest } from "../api/products";
 import { ProductInfo } from "../types";
+import { toast } from "sonner";
 
 export function EditProductDialog({
   isOpen,
@@ -35,6 +36,7 @@ export function EditProductDialog({
     e.preventDefault();
     if (!loadingSubmit) {
       setLoadingSubmit(true);
+      const toastId = toast.loading("Producto enviado a editar");
       try {
         const res = await editRequest({
           id,
@@ -46,6 +48,7 @@ export function EditProductDialog({
           weight,
         });
         console.log(res);
+
         if (res.status == 200) {
           updateProduct({
             id,
@@ -57,9 +60,13 @@ export function EditProductDialog({
             weight,
           });
           setIsOpen(false);
+          toast.success("Producto guardado", { id: toastId });
+        } else {
+          toast.error("Ocurrio un error", { id: toastId });
         }
       } catch (error) {
         console.log(error);
+        toast.error("Ocurrio un error", { id: toastId });
       } finally {
         setLoadingSubmit(false);
       }
